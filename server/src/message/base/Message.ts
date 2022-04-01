@@ -15,9 +15,9 @@ import { Attachment } from "../../attachment/base/Attachment";
 import {
   ValidateNested,
   IsOptional,
+  IsString,
   IsDate,
   IsEnum,
-  IsString,
 } from "class-validator";
 import { Type } from "class-transformer";
 import { EnumMessageFolder } from "./EnumMessageFolder";
@@ -32,6 +32,17 @@ class Message {
   @Type(() => Attachment)
   @IsOptional()
   attachments?: Array<Attachment>;
+
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  body!: string | null;
 
   @ApiProperty({
     required: true,

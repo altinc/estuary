@@ -483,6 +483,7 @@ export class RouteControllerBase {
     const results = await this.service.findMessages(params.id, {
       ...query,
       select: {
+        body: true,
         createdAt: true,
         folder: true,
         id: true,

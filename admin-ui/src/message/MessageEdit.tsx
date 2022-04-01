@@ -6,8 +6,8 @@ import {
   EditProps,
   ReferenceArrayInput,
   SelectArrayInput,
-  SelectInput,
   TextInput,
+  SelectInput,
   ReferenceInput,
 } from "react-admin";
 
@@ -26,6 +26,7 @@ export const MessageEdit = (props: EditProps): React.ReactElement => {
         >
           <SelectArrayInput optionText={AttachmentTitle} />
         </ReferenceArrayInput>
+        <TextInput label="Body" multiline source="body" />
         <SelectInput
           source="folder"
           label="Folder"

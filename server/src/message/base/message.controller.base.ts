@@ -81,6 +81,7 @@ export class MessageControllerBase {
         },
       },
       select: {
+        body: true,
         createdAt: true,
         folder: true,
         id: true,
@@ -126,6 +127,7 @@ export class MessageControllerBase {
     const results = await this.service.findMany({
       ...args,
       select: {
+        body: true,
         createdAt: true,
         folder: true,
         id: true,
@@ -170,6 +172,7 @@ export class MessageControllerBase {
     const result = await this.service.findOne({
       where: params,
       select: {
+        body: true,
         createdAt: true,
         folder: true,
         id: true,
@@ -241,6 +244,7 @@ export class MessageControllerBase {
           },
         },
         select: {
+          body: true,
           createdAt: true,
           folder: true,
           id: true,
@@ -286,6 +290,7 @@ export class MessageControllerBase {
       return await this.service.delete({
         where: params,
         select: {
+          body: true,
           createdAt: true,
           folder: true,
           id: true,

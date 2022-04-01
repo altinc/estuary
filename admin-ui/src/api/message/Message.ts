@@ -3,6 +3,7 @@ import { Route } from "../route/Route";
 
 export type Message = {
   attachments?: Array<Attachment>;
+  body: string | null;
   createdAt: Date;
   folder?: "Inbox" | "Outbox";
   id: string;
