@@ -14,6 +14,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { AttachmentListRelationFilter } from "../../attachment/base/AttachmentListRelationFilter";
 import { ValidateNested, IsOptional, IsEnum } from "class-validator";
 import { Type } from "class-transformer";
+import { StringNullableFilter } from "../../util/StringNullableFilter";
 import { EnumMessageFolder } from "./EnumMessageFolder";
 import { StringFilter } from "../../util/StringFilter";
 import { RouteWhereUniqueInput } from "../../route/base/RouteWhereUniqueInput";
@@ -30,6 +31,17 @@ class MessageWhereInput {
     nullable: true,
   })
   attachments?: AttachmentListRelationFilter;
+
+  @ApiProperty({
+    required: false,
+    type: StringNullableFilter,
+  })
+  @Type(() => StringNullableFilter)
+  @IsOptional()
+  @Field(() => StringNullableFilter, {
+    nullable: true,
+  })
+  body?: StringNullableFilter;
 
   @ApiProperty({
     required: false,

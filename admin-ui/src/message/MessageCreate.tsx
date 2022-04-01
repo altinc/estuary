@@ -6,8 +6,8 @@ import {
   CreateProps,
   ReferenceArrayInput,
   SelectArrayInput,
-  SelectInput,
   TextInput,
+  SelectInput,
   ReferenceInput,
 } from "react-admin";
 
@@ -26,6 +26,7 @@ export const MessageCreate = (props: CreateProps): React.ReactElement => {
         >
           <SelectArrayInput optionText={AttachmentTitle} />
         </ReferenceArrayInput>
+        <TextInput label="Body" multiline source="body" />
         <SelectInput
           source="folder"
           label="Folder"

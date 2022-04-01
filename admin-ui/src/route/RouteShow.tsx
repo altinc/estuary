@@ -53,6 +53,7 @@ export const RouteShow = (props: ShowProps): React.ReactElement => {
           label="Messages"
         >
           <Datagrid rowClick="show">
+            <TextField label="Body" source="body" />
             <DateField source="createdAt" label="Created At" />
             <TextField label="Folder" source="folder" />
             <TextField label="ID" source="id" />

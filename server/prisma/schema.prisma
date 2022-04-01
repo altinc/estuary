@@ -44,6 +44,7 @@ model Route {
 
 model Message {
   attachments Attachment[]
+  body        String?
   createdAt   DateTime          @default(now())
   folder      EnumMessageFolder
   id          String            @id @default(cuid())
