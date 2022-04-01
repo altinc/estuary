@@ -1,0 +1,19 @@
+{
+  "dataServiceGeneratorVersion": "0.12.3",
+  "appInfo": {
+    "name": "estuary",
+    "description": "",
+    "version": "ni71oo7g",
+    "id": "cl1gr6edg26139301s60h406jf3",
+    "url": "https://app.amplication.com/cl1gr6edg26139301s60h406jf3",
+    "settings": {
+      "dbHost": "localhost",
+      "dbName": "estuary",
+      "dbPassword": "internet",
+      "dbPort": 5432,
+      "dbUser": "admin",
+      "appId": "cl1gr6edg26139301s60h406jf3",
+      "authProvider": "Jwt"
+    }
+  }
+}
