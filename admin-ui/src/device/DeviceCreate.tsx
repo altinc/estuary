@@ -1,12 +1,14 @@
 import * as React from "react";
+
 import {
   Create,
   SimpleForm,
   CreateProps,
   TextInput,
-  ReferenceInput,
-  SelectInput,
+  ReferenceArrayInput,
+  SelectArrayInput,
 } from "react-admin";
+
 import { UserTitle } from "../user/UserTitle";
 
 export const DeviceCreate = (props: CreateProps): React.ReactElement => {
@@ -16,9 +18,14 @@ export const DeviceCreate = (props: CreateProps): React.ReactElement => {
         <TextInput label="AppId" source="appId" />
         <TextInput label="DeviceToken" source="deviceToken" />
         <TextInput label="Selector" source="selector" />
-        <ReferenceInput source="user.id" reference="User" label="User">
-          <SelectInput optionText={UserTitle} />
-        </ReferenceInput>
+        <ReferenceArrayInput
+          source="user"
+          reference="User"
+          parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
+          format={(value: any) => value && value.map((v: any) => v.id)}
+        >
+          <SelectArrayInput optionText={UserTitle} />
+        </ReferenceArrayInput>
       </SimpleForm>
     </Create>
   );

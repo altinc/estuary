@@ -1,8 +1,8 @@
-import { UserWhereUniqueInput } from "../user/UserWhereUniqueInput";
+import { UserCreateNestedManyWithoutDevicesInput } from "./UserCreateNestedManyWithoutDevicesInput";
 
 export type DeviceCreateInput = {
   appId: string;
   deviceToken: string;
   selector: string;
-  user?: UserWhereUniqueInput;
+  user?: UserCreateNestedManyWithoutDevicesInput;
 };

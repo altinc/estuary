@@ -29,7 +29,7 @@ model Device {
   id          String   @id @default(cuid())
   selector    String   @unique
   updatedAt   DateTime @updatedAt
-  user        User
+  user        User[]
 }
 
 model Route {

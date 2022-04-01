@@ -7,5 +7,4 @@ export type DeviceOrderByInput = {
   id?: SortOrder;
   selector?: SortOrder;
   updatedAt?: SortOrder;
-  userId?: SortOrder;
 };

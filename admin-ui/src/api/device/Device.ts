@@ -7,5 +7,5 @@ export type Device = {
   id: string;
   selector: string;
   updatedAt: Date;
-  user?: User;
+  user?: Array<User>;
 };
