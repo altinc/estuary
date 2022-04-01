@@ -1,8 +1,8 @@
-import { UserWhereUniqueInput } from "../user/UserWhereUniqueInput";
+import { UserUpdateManyWithoutDevicesInput } from "./UserUpdateManyWithoutDevicesInput";
 
 export type DeviceUpdateInput = {
   appId?: string;
   deviceToken?: string;
   selector?: string;
-  user?: UserWhereUniqueInput;
+  user?: UserUpdateManyWithoutDevicesInput;
 };

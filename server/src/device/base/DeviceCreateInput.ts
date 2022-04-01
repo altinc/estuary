@@ -12,7 +12,7 @@ https://docs.amplication.com/docs/how-to/custom-code
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
 import { IsString, ValidateNested, IsOptional } from "class-validator";
-import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
+import { UserCreateNestedManyWithoutDevicesInput } from "./UserCreateNestedManyWithoutDevicesInput";
 import { Type } from "class-transformer";
 @InputType()
 class DeviceCreateInput {
@@ -42,14 +42,14 @@ class DeviceCreateInput {
 
   @ApiProperty({
     required: false,
-    type: () => UserWhereUniqueInput,
+    type: () => UserCreateNestedManyWithoutDevicesInput,
   })
   @ValidateNested()
-  @Type(() => UserWhereUniqueInput)
+  @Type(() => UserCreateNestedManyWithoutDevicesInput)
   @IsOptional()
-  @Field(() => UserWhereUniqueInput, {
+  @Field(() => UserCreateNestedManyWithoutDevicesInput, {
     nullable: true,
   })
-  user?: UserWhereUniqueInput;
+  user?: UserCreateNestedManyWithoutDevicesInput;
 }
 export { DeviceCreateInput };

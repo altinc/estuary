@@ -47,11 +47,14 @@ export class DeviceServiceBase {
     return this.prisma.device.delete(args);
   }
 
-  async getUser(parentId: string): Promise<User | null> {
+  async findUser(
+    parentId: string,
+    args: Prisma.UserFindManyArgs
+  ): Promise<User[]> {
     return this.prisma.device
       .findUnique({
         where: { id: parentId },
       })
-      .user();
+      .user(args);
   }
 }
