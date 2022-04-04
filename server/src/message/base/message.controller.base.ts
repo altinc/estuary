@@ -27,9 +27,6 @@ import { MessageWhereUniqueInput } from "./MessageWhereUniqueInput";
 import { MessageFindManyArgs } from "./MessageFindManyArgs";
 import { MessageUpdateInput } from "./MessageUpdateInput";
 import { Message } from "./Message";
-import { AttachmentFindManyArgs } from "../../attachment/base/AttachmentFindManyArgs";
-import { Attachment } from "../../attachment/base/Attachment";
-import { AttachmentWhereUniqueInput } from "../../attachment/base/AttachmentWhereUniqueInput";
 @swagger.ApiBearerAuth()
 export class MessageControllerBase {
   constructor(
@@ -82,6 +79,7 @@ export class MessageControllerBase {
       },
       select: {
         body: true,
+        contentType: true,
         createdAt: true,
         folder: true,
         id: true,
@@ -128,6 +126,7 @@ export class MessageControllerBase {
       ...args,
       select: {
         body: true,
+        contentType: true,
         createdAt: true,
         folder: true,
         id: true,
@@ -173,6 +172,7 @@ export class MessageControllerBase {
       where: params,
       select: {
         body: true,
+        contentType: true,
         createdAt: true,
         folder: true,
         id: true,
@@ -245,6 +245,7 @@ export class MessageControllerBase {
         },
         select: {
           body: true,
+          contentType: true,
           createdAt: true,
           folder: true,
           id: true,
@@ -291,6 +292,7 @@ export class MessageControllerBase {
         where: params,
         select: {
           body: true,
+          contentType: true,
           createdAt: true,
           folder: true,
           id: true,
@@ -313,197 +315,5 @@ export class MessageControllerBase {
       }
       throw error;
     }
-  }
-
-  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
-  @common.UseGuards(
-    defaultAuthGuard.DefaultAuthGuard,
-    nestAccessControl.ACGuard
-  )
-  @common.Get("/:id/attachments")
-  @nestAccessControl.UseRoles({
-    resource: "Message",
-    action: "read",
-    possession: "any",
-  })
-  @ApiNestedQuery(AttachmentFindManyArgs)
-  async findManyAttachments(
-    @common.Req() request: Request,
-    @common.Param() params: MessageWhereUniqueInput,
-    @nestAccessControl.UserRoles() userRoles: string[]
-  ): Promise<Attachment[]> {
-    const query = plainToClass(AttachmentFindManyArgs, request.query);
-    const permission = this.rolesBuilder.permission({
-      role: userRoles,
-      action: "read",
-      possession: "any",
-      resource: "Attachment",
-    });
-    const results = await this.service.findAttachments(params.id, {
-      ...query,
-      select: {
-        body: true,
-        createdAt: true,
-        folder: true,
-        id: true,
-
-        message: {
-          select: {
-            id: true,
-          },
-        },
-
-        party: true,
-
-        route: {
-          select: {
-            id: true,
-          },
-        },
-
-        updatedAt: true,
-      },
-    });
-    if (results === null) {
-      throw new errors.NotFoundException(
-        `No resource was found for ${JSON.stringify(params)}`
-      );
-    }
-    return results.map((result) => permission.filter(result));
-  }
-
-  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
-  @common.UseGuards(
-    defaultAuthGuard.DefaultAuthGuard,
-    nestAccessControl.ACGuard
-  )
-  @common.Post("/:id/attachments")
-  @nestAccessControl.UseRoles({
-    resource: "Message",
-    action: "update",
-    possession: "any",
-  })
-  async createAttachments(
-    @common.Param() params: MessageWhereUniqueInput,
-    @common.Body() body: MessageWhereUniqueInput[],
-    @nestAccessControl.UserRoles() userRoles: string[]
-  ): Promise<void> {
-    const data = {
-      attachments: {
-        connect: body,
-      },
-    };
-    const permission = this.rolesBuilder.permission({
-      role: userRoles,
-      action: "update",
-      possession: "any",
-      resource: "Message",
-    });
-    const invalidAttributes = abacUtil.getInvalidAttributes(permission, data);
-    if (invalidAttributes.length) {
-      const roles = userRoles
-        .map((role: string) => JSON.stringify(role))
-        .join(",");
-      throw new common.ForbiddenException(
-        `Updating the relationship: ${
-          invalidAttributes[0]
-        } of ${"Message"} is forbidden for roles: ${roles}`
-      );
-    }
-    await this.service.update({
-      where: params,
-      data,
-      select: { id: true },
-    });
-  }
-
-  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
-  @common.UseGuards(
-    defaultAuthGuard.DefaultAuthGuard,
-    nestAccessControl.ACGuard
-  )
-  @common.Patch("/:id/attachments")
-  @nestAccessControl.UseRoles({
-    resource: "Message",
-    action: "update",
-    possession: "any",
-  })
-  async updateAttachments(
-    @common.Param() params: MessageWhereUniqueInput,
-    @common.Body() body: AttachmentWhereUniqueInput[],
-    @nestAccessControl.UserRoles() userRoles: string[]
-  ): Promise<void> {
-    const data = {
-      attachments: {
-        set: body,
-      },
-    };
-    const permission = this.rolesBuilder.permission({
-      role: userRoles,
-      action: "update",
-      possession: "any",
-      resource: "Message",
-    });
-    const invalidAttributes = abacUtil.getInvalidAttributes(permission, data);
-    if (invalidAttributes.length) {
-      const roles = userRoles
-        .map((role: string) => JSON.stringify(role))
-        .join(",");
-      throw new common.ForbiddenException(
-        `Updating the relationship: ${
-          invalidAttributes[0]
-        } of ${"Message"} is forbidden for roles: ${roles}`
-      );
-    }
-    await this.service.update({
-      where: params,
-      data,
-      select: { id: true },
-    });
-  }
-
-  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
-  @common.UseGuards(
-    defaultAuthGuard.DefaultAuthGuard,
-    nestAccessControl.ACGuard
-  )
-  @common.Delete("/:id/attachments")
-  @nestAccessControl.UseRoles({
-    resource: "Message",
-    action: "update",
-    possession: "any",
-  })
-  async deleteAttachments(
-    @common.Param() params: MessageWhereUniqueInput,
-    @common.Body() body: MessageWhereUniqueInput[],
-    @nestAccessControl.UserRoles() userRoles: string[]
-  ): Promise<void> {
-    const data = {
-      attachments: {
-        disconnect: body,
-      },
-    };
-    const permission = this.rolesBuilder.permission({
-      role: userRoles,
-      action: "update",
-      possession: "any",
-      resource: "Message",
-    });
-    const invalidAttributes = abacUtil.getInvalidAttributes(permission, data);
-    if (invalidAttributes.length) {
-      const roles = userRoles
-        .map((role: string) => JSON.stringify(role))
-        .join(",");
-      throw new common.ForbiddenException(
-        `Updating the relationship: ${
-          invalidAttributes[0]
-        } of ${"Message"} is forbidden for roles: ${roles}`
-      );
-    }
-    await this.service.update({
-      where: params,
-      data,
-      select: { id: true },
-    });
   }
 }

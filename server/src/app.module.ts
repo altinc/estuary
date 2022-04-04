@@ -3,7 +3,6 @@ import { UserModule } from "./user/user.module";
 import { DeviceModule } from "./device/device.module";
 import { RouteModule } from "./route/route.module";
 import { MessageModule } from "./message/message.module";
-import { AttachmentModule } from "./attachment/attachment.module";
 import { ACLModule } from "./auth/acl.module";
 import { AuthModule } from "./auth/auth.module";
 import { HealthModule } from "./health/health.module";
@@ -21,7 +20,6 @@ import { GraphQLModule } from "@nestjs/graphql";
     DeviceModule,
     RouteModule,
     MessageModule,
-    AttachmentModule,
     ACLModule,
     AuthModule,
     HealthModule,

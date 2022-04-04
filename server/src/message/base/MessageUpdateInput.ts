@@ -11,25 +11,12 @@ https://docs.amplication.com/docs/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { AttachmentUpdateManyWithoutMessagesInput } from "./AttachmentUpdateManyWithoutMessagesInput";
-import { ValidateNested, IsOptional, IsString, IsEnum } from "class-validator";
-import { Type } from "class-transformer";
+import { IsString, IsOptional, IsEnum, ValidateNested } from "class-validator";
 import { EnumMessageFolder } from "./EnumMessageFolder";
 import { RouteWhereUniqueInput } from "../../route/base/RouteWhereUniqueInput";
+import { Type } from "class-transformer";
 @InputType()
 class MessageUpdateInput {
-  @ApiProperty({
-    required: false,
-    type: () => AttachmentUpdateManyWithoutMessagesInput,
-  })
-  @ValidateNested()
-  @Type(() => AttachmentUpdateManyWithoutMessagesInput)
-  @IsOptional()
-  @Field(() => AttachmentUpdateManyWithoutMessagesInput, {
-    nullable: true,
-  })
-  attachments?: AttachmentUpdateManyWithoutMessagesInput;
-
   @ApiProperty({
     required: false,
     type: String,
@@ -40,6 +27,17 @@ class MessageUpdateInput {
     nullable: true,
   })
   body?: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  contentType?: string;
 
   @ApiProperty({
     required: false,

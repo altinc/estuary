@@ -11,22 +11,12 @@ https://docs.amplication.com/docs/how-to/custom-code
   */
 import { ObjectType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { Attachment } from "../../attachment/base/Attachment";
-import { ValidateNested, IsOptional, IsDate, IsString } from "class-validator";
+import { IsDate, IsString, ValidateNested, IsOptional } from "class-validator";
 import { Type } from "class-transformer";
 import { Message } from "../../message/base/Message";
 import { User } from "../../user/base/User";
 @ObjectType()
 class Route {
-  @ApiProperty({
-    required: false,
-    type: () => [Attachment],
-  })
-  @ValidateNested()
-  @Type(() => Attachment)
-  @IsOptional()
-  attachments?: Array<Attachment>;
-
   @ApiProperty({
     required: true,
   })

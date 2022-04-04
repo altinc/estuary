@@ -11,25 +11,12 @@ https://docs.amplication.com/docs/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { AttachmentCreateNestedManyWithoutRoutesInput } from "./AttachmentCreateNestedManyWithoutRoutesInput";
-import { ValidateNested, IsOptional, IsString } from "class-validator";
-import { Type } from "class-transformer";
+import { IsString, ValidateNested, IsOptional } from "class-validator";
 import { MessageCreateNestedManyWithoutRoutesInput } from "./MessageCreateNestedManyWithoutRoutesInput";
+import { Type } from "class-transformer";
 import { UserCreateNestedManyWithoutRoutesInput } from "./UserCreateNestedManyWithoutRoutesInput";
 @InputType()
 class RouteCreateInput {
-  @ApiProperty({
-    required: false,
-    type: () => AttachmentCreateNestedManyWithoutRoutesInput,
-  })
-  @ValidateNested()
-  @Type(() => AttachmentCreateNestedManyWithoutRoutesInput)
-  @IsOptional()
-  @Field(() => AttachmentCreateNestedManyWithoutRoutesInput, {
-    nullable: true,
-  })
-  attachments?: AttachmentCreateNestedManyWithoutRoutesInput;
-
   @ApiProperty({
     required: true,
     type: String,

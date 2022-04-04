@@ -11,7 +11,6 @@ import {
   ReferenceField,
 } from "react-admin";
 
-import { MESSAGE_TITLE_FIELD } from "../message/MessageTitle";
 import { ROUTE_TITLE_FIELD } from "./RouteTitle";
 import { DEVICE_TITLE_FIELD } from "../device/DeviceTitle";
 
@@ -24,36 +23,13 @@ export const RouteShow = (props: ShowProps): React.ReactElement => {
         <TextField label="ID" source="id" />
         <DateField source="updatedAt" label="Updated At" />
         <ReferenceManyField
-          reference="Attachment"
-          target="RouteId"
-          label="Attachments"
-        >
-          <Datagrid rowClick="show">
-            <TextField label="Body" source="body" />
-            <DateField source="createdAt" label="Created At" />
-            <TextField label="Folder" source="folder" />
-            <TextField label="ID" source="id" />
-            <ReferenceField
-              label="Message"
-              source="message.id"
-              reference="Message"
-            >
-              <TextField source={MESSAGE_TITLE_FIELD} />
-            </ReferenceField>
-            <TextField label="Party" source="party" />
-            <ReferenceField label="Route" source="route.id" reference="Route">
-              <TextField source={ROUTE_TITLE_FIELD} />
-            </ReferenceField>
-            <DateField source="updatedAt" label="Updated At" />
-          </Datagrid>
-        </ReferenceManyField>
-        <ReferenceManyField
           reference="Message"
           target="RouteId"
           label="Messages"
         >
           <Datagrid rowClick="show">
             <TextField label="Body" source="body" />
+            <TextField label="ContentType" source="contentType" />
             <DateField source="createdAt" label="Created At" />
             <TextField label="Folder" source="folder" />
             <TextField label="ID" source="id" />

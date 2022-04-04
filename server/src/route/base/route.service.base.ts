@@ -10,7 +10,7 @@ https://docs.amplication.com/docs/how-to/custom-code
 ------------------------------------------------------------------------------
   */
 import { PrismaService } from "nestjs-prisma";
-import { Prisma, Route, Attachment, Message, User } from "@prisma/client";
+import { Prisma, Route, Message, User } from "@prisma/client";
 
 export class RouteServiceBase {
   constructor(protected readonly prisma: PrismaService) {}
@@ -45,17 +45,6 @@ export class RouteServiceBase {
     args: Prisma.SelectSubset<T, Prisma.RouteDeleteArgs>
   ): Promise<Route> {
     return this.prisma.route.delete(args);
-  }
-
-  async findAttachments(
-    parentId: string,
-    args: Prisma.AttachmentFindManyArgs
-  ): Promise<Attachment[]> {
-    return this.prisma.route
-      .findUnique({
-        where: { id: parentId },
-      })
-      .attachments(args);
   }
 
   async findMessages(

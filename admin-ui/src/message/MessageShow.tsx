@@ -1,5 +1,4 @@
 import * as React from "react";
-
 import {
   Show,
   SimpleShowLayout,
@@ -7,11 +6,7 @@ import {
   TextField,
   DateField,
   ReferenceField,
-  ReferenceManyField,
-  Datagrid,
 } from "react-admin";
-
-import { MESSAGE_TITLE_FIELD } from "./MessageTitle";
 import { ROUTE_TITLE_FIELD } from "../route/RouteTitle";
 
 export const MessageShow = (props: ShowProps): React.ReactElement => {
@@ -19,6 +14,7 @@ export const MessageShow = (props: ShowProps): React.ReactElement => {
     <Show {...props}>
       <SimpleShowLayout>
         <TextField label="Body" source="body" />
+        <TextField label="ContentType" source="contentType" />
         <DateField source="createdAt" label="Created At" />
         <TextField label="Folder" source="folder" />
         <TextField label="ID" source="id" />
@@ -27,30 +23,6 @@ export const MessageShow = (props: ShowProps): React.ReactElement => {
           <TextField source={ROUTE_TITLE_FIELD} />
         </ReferenceField>
         <DateField source="updatedAt" label="Updated At" />
-        <ReferenceManyField
-          reference="Attachment"
-          target="MessageId"
-          label="Attachments"
-        >
-          <Datagrid rowClick="show">
-            <TextField label="Body" source="body" />
-            <DateField source="createdAt" label="Created At" />
-            <TextField label="Folder" source="folder" />
-            <TextField label="ID" source="id" />
-            <ReferenceField
-              label="Message"
-              source="message.id"
-              reference="Message"
-            >
-              <TextField source={MESSAGE_TITLE_FIELD} />
-            </ReferenceField>
-            <TextField label="Party" source="party" />
-            <ReferenceField label="Route" source="route.id" reference="Route">
-              <TextField source={ROUTE_TITLE_FIELD} />
-            </ReferenceField>
-            <DateField source="updatedAt" label="Updated At" />
-          </Datagrid>
-        </ReferenceManyField>
       </SimpleShowLayout>
     </Show>
   );

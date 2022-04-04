@@ -21,10 +21,6 @@ import { MessageList } from "./message/MessageList";
 import { MessageCreate } from "./message/MessageCreate";
 import { MessageEdit } from "./message/MessageEdit";
 import { MessageShow } from "./message/MessageShow";
-import { AttachmentList } from "./attachment/AttachmentList";
-import { AttachmentCreate } from "./attachment/AttachmentCreate";
-import { AttachmentEdit } from "./attachment/AttachmentEdit";
-import { AttachmentShow } from "./attachment/AttachmentShow";
 import { jwtAuthProvider } from "./auth-provider/ra-auth-jwt";
 
 const App = (): React.ReactElement => {
@@ -78,13 +74,6 @@ const App = (): React.ReactElement => {
           edit={MessageEdit}
           create={MessageCreate}
           show={MessageShow}
-        />
-        <Resource
-          name="Attachment"
-          list={AttachmentList}
-          edit={AttachmentEdit}
-          create={AttachmentCreate}
-          show={AttachmentShow}
         />
       </Admin>
     </div>

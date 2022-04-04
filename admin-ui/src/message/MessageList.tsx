@@ -21,6 +21,7 @@ export const MessageList = (props: ListProps): React.ReactElement => {
     >
       <Datagrid rowClick="show">
         <TextField label="Body" source="body" />
+        <TextField label="ContentType" source="contentType" />
         <DateField source="createdAt" label="Created At" />
         <TextField label="Folder" source="folder" />
         <TextField label="ID" source="id" />

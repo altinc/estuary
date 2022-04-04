@@ -27,9 +27,6 @@ import { RouteWhereUniqueInput } from "./RouteWhereUniqueInput";
 import { RouteFindManyArgs } from "./RouteFindManyArgs";
 import { RouteUpdateInput } from "./RouteUpdateInput";
 import { Route } from "./Route";
-import { AttachmentFindManyArgs } from "../../attachment/base/AttachmentFindManyArgs";
-import { Attachment } from "../../attachment/base/Attachment";
-import { AttachmentWhereUniqueInput } from "../../attachment/base/AttachmentWhereUniqueInput";
 import { MessageFindManyArgs } from "../../message/base/MessageFindManyArgs";
 import { Message } from "../../message/base/Message";
 import { MessageWhereUniqueInput } from "../../message/base/MessageWhereUniqueInput";
@@ -269,198 +266,6 @@ export class RouteControllerBase {
     defaultAuthGuard.DefaultAuthGuard,
     nestAccessControl.ACGuard
   )
-  @common.Get("/:id/attachments")
-  @nestAccessControl.UseRoles({
-    resource: "Route",
-    action: "read",
-    possession: "any",
-  })
-  @ApiNestedQuery(AttachmentFindManyArgs)
-  async findManyAttachments(
-    @common.Req() request: Request,
-    @common.Param() params: RouteWhereUniqueInput,
-    @nestAccessControl.UserRoles() userRoles: string[]
-  ): Promise<Attachment[]> {
-    const query = plainToClass(AttachmentFindManyArgs, request.query);
-    const permission = this.rolesBuilder.permission({
-      role: userRoles,
-      action: "read",
-      possession: "any",
-      resource: "Attachment",
-    });
-    const results = await this.service.findAttachments(params.id, {
-      ...query,
-      select: {
-        body: true,
-        createdAt: true,
-        folder: true,
-        id: true,
-
-        message: {
-          select: {
-            id: true,
-          },
-        },
-
-        party: true,
-
-        route: {
-          select: {
-            id: true,
-          },
-        },
-
-        updatedAt: true,
-      },
-    });
-    if (results === null) {
-      throw new errors.NotFoundException(
-        `No resource was found for ${JSON.stringify(params)}`
-      );
-    }
-    return results.map((result) => permission.filter(result));
-  }
-
-  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
-  @common.UseGuards(
-    defaultAuthGuard.DefaultAuthGuard,
-    nestAccessControl.ACGuard
-  )
-  @common.Post("/:id/attachments")
-  @nestAccessControl.UseRoles({
-    resource: "Route",
-    action: "update",
-    possession: "any",
-  })
-  async createAttachments(
-    @common.Param() params: RouteWhereUniqueInput,
-    @common.Body() body: RouteWhereUniqueInput[],
-    @nestAccessControl.UserRoles() userRoles: string[]
-  ): Promise<void> {
-    const data = {
-      attachments: {
-        connect: body,
-      },
-    };
-    const permission = this.rolesBuilder.permission({
-      role: userRoles,
-      action: "update",
-      possession: "any",
-      resource: "Route",
-    });
-    const invalidAttributes = abacUtil.getInvalidAttributes(permission, data);
-    if (invalidAttributes.length) {
-      const roles = userRoles
-        .map((role: string) => JSON.stringify(role))
-        .join(",");
-      throw new common.ForbiddenException(
-        `Updating the relationship: ${
-          invalidAttributes[0]
-        } of ${"Route"} is forbidden for roles: ${roles}`
-      );
-    }
-    await this.service.update({
-      where: params,
-      data,
-      select: { id: true },
-    });
-  }
-
-  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
-  @common.UseGuards(
-    defaultAuthGuard.DefaultAuthGuard,
-    nestAccessControl.ACGuard
-  )
-  @common.Patch("/:id/attachments")
-  @nestAccessControl.UseRoles({
-    resource: "Route",
-    action: "update",
-    possession: "any",
-  })
-  async updateAttachments(
-    @common.Param() params: RouteWhereUniqueInput,
-    @common.Body() body: AttachmentWhereUniqueInput[],
-    @nestAccessControl.UserRoles() userRoles: string[]
-  ): Promise<void> {
-    const data = {
-      attachments: {
-        set: body,
-      },
-    };
-    const permission = this.rolesBuilder.permission({
-      role: userRoles,
-      action: "update",
-      possession: "any",
-      resource: "Route",
-    });
-    const invalidAttributes = abacUtil.getInvalidAttributes(permission, data);
-    if (invalidAttributes.length) {
-      const roles = userRoles
-        .map((role: string) => JSON.stringify(role))
-        .join(",");
-      throw new common.ForbiddenException(
-        `Updating the relationship: ${
-          invalidAttributes[0]
-        } of ${"Route"} is forbidden for roles: ${roles}`
-      );
-    }
-    await this.service.update({
-      where: params,
-      data,
-      select: { id: true },
-    });
-  }
-
-  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
-  @common.UseGuards(
-    defaultAuthGuard.DefaultAuthGuard,
-    nestAccessControl.ACGuard
-  )
-  @common.Delete("/:id/attachments")
-  @nestAccessControl.UseRoles({
-    resource: "Route",
-    action: "update",
-    possession: "any",
-  })
-  async deleteAttachments(
-    @common.Param() params: RouteWhereUniqueInput,
-    @common.Body() body: RouteWhereUniqueInput[],
-    @nestAccessControl.UserRoles() userRoles: string[]
-  ): Promise<void> {
-    const data = {
-      attachments: {
-        disconnect: body,
-      },
-    };
-    const permission = this.rolesBuilder.permission({
-      role: userRoles,
-      action: "update",
-      possession: "any",
-      resource: "Route",
-    });
-    const invalidAttributes = abacUtil.getInvalidAttributes(permission, data);
-    if (invalidAttributes.length) {
-      const roles = userRoles
-        .map((role: string) => JSON.stringify(role))
-        .join(",");
-      throw new common.ForbiddenException(
-        `Updating the relationship: ${
-          invalidAttributes[0]
-        } of ${"Route"} is forbidden for roles: ${roles}`
-      );
-    }
-    await this.service.update({
-      where: params,
-      data,
-      select: { id: true },
-    });
-  }
-
-  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
-  @common.UseGuards(
-    defaultAuthGuard.DefaultAuthGuard,
-    nestAccessControl.ACGuard
-  )
   @common.Get("/:id/messages")
   @nestAccessControl.UseRoles({
     resource: "Route",
@@ -484,6 +289,7 @@ export class RouteControllerBase {
       ...query,
       select: {
         body: true,
+        contentType: true,
         createdAt: true,
         folder: true,
         id: true,

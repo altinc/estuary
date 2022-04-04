@@ -1,32 +1,20 @@
 import * as React from "react";
-
 import {
   Create,
   SimpleForm,
   CreateProps,
-  ReferenceArrayInput,
-  SelectArrayInput,
   TextInput,
   SelectInput,
   ReferenceInput,
 } from "react-admin";
-
-import { AttachmentTitle } from "../attachment/AttachmentTitle";
 import { RouteTitle } from "../route/RouteTitle";
 
 export const MessageCreate = (props: CreateProps): React.ReactElement => {
   return (
     <Create {...props}>
       <SimpleForm>
-        <ReferenceArrayInput
-          source="attachments"
-          reference="Attachment"
-          parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
-          format={(value: any) => value && value.map((v: any) => v.id)}
-        >
-          <SelectArrayInput optionText={AttachmentTitle} />
-        </ReferenceArrayInput>
         <TextInput label="Body" multiline source="body" />
+        <TextInput label="ContentType" source="contentType" />
         <SelectInput
           source="folder"
           label="Folder"

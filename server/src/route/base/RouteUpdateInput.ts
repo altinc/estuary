@@ -11,25 +11,12 @@ https://docs.amplication.com/docs/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { AttachmentUpdateManyWithoutRoutesInput } from "./AttachmentUpdateManyWithoutRoutesInput";
-import { ValidateNested, IsOptional, IsString } from "class-validator";
-import { Type } from "class-transformer";
+import { IsString, IsOptional, ValidateNested } from "class-validator";
 import { MessageUpdateManyWithoutRoutesInput } from "./MessageUpdateManyWithoutRoutesInput";
+import { Type } from "class-transformer";
 import { UserUpdateManyWithoutRoutesInput } from "./UserUpdateManyWithoutRoutesInput";
 @InputType()
 class RouteUpdateInput {
-  @ApiProperty({
-    required: false,
-    type: () => AttachmentUpdateManyWithoutRoutesInput,
-  })
-  @ValidateNested()
-  @Type(() => AttachmentUpdateManyWithoutRoutesInput)
-  @IsOptional()
-  @Field(() => AttachmentUpdateManyWithoutRoutesInput, {
-    nullable: true,
-  })
-  attachments?: AttachmentUpdateManyWithoutRoutesInput;
-
   @ApiProperty({
     required: false,
     type: String,
