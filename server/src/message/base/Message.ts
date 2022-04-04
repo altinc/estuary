@@ -11,28 +11,18 @@ https://docs.amplication.com/docs/how-to/custom-code
   */
 import { ObjectType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { Attachment } from "../../attachment/base/Attachment";
 import {
-  ValidateNested,
-  IsOptional,
   IsString,
+  IsOptional,
   IsDate,
   IsEnum,
+  ValidateNested,
 } from "class-validator";
 import { Type } from "class-transformer";
 import { EnumMessageFolder } from "./EnumMessageFolder";
 import { Route } from "../../route/base/Route";
 @ObjectType()
 class Message {
-  @ApiProperty({
-    required: false,
-    type: () => [Attachment],
-  })
-  @ValidateNested()
-  @Type(() => Attachment)
-  @IsOptional()
-  attachments?: Array<Attachment>;
-
   @ApiProperty({
     required: false,
     type: String,
@@ -43,6 +33,14 @@ class Message {
     nullable: true,
   })
   body!: string | null;
+
+  @ApiProperty({
+    required: true,
+    type: String,
+  })
+  @IsString()
+  @Field(() => String)
+  contentType!: string;
 
   @ApiProperty({
     required: true,

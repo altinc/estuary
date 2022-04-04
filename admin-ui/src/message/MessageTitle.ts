@@ -1,7 +1,7 @@
 import { Message as TMessage } from "../api/message/Message";
 
-export const MESSAGE_TITLE_FIELD = "id";
+export const MESSAGE_TITLE_FIELD = "contentType";
 
 export const MessageTitle = (record: TMessage): string => {
-  return record.id || record.id;
+  return record.contentType || record.id;
 };

@@ -12,6 +12,7 @@ const nonExistingId = "nonExistingId";
 const existingId = "existingId";
 const CREATE_INPUT = {
   body: "exampleBody",
+  contentType: "exampleContentType",
   createdAt: new Date(),
   id: "exampleId",
   party: "exampleParty",
@@ -19,6 +20,7 @@ const CREATE_INPUT = {
 };
 const CREATE_RESULT = {
   body: "exampleBody",
+  contentType: "exampleContentType",
   createdAt: new Date(),
   id: "exampleId",
   party: "exampleParty",
@@ -27,6 +29,7 @@ const CREATE_RESULT = {
 const FIND_MANY_RESULT = [
   {
     body: "exampleBody",
+    contentType: "exampleContentType",
     createdAt: new Date(),
     id: "exampleId",
     party: "exampleParty",
@@ -35,6 +38,7 @@ const FIND_MANY_RESULT = [
 ];
 const FIND_ONE_RESULT = {
   body: "exampleBody",
+  contentType: "exampleContentType",
   createdAt: new Date(),
   id: "exampleId",
   party: "exampleParty",

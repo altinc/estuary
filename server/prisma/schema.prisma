@@ -33,18 +33,17 @@ model Device {
 }
 
 model Route {
-  attachments Attachment[]
-  createdAt   DateTime     @default(now())
-  did         String       @unique
-  id          String       @id @default(cuid())
-  messages    Message[]
-  updatedAt   DateTime     @updatedAt
-  users       User[]
+  createdAt DateTime  @default(now())
+  did       String    @unique
+  id        String    @id @default(cuid())
+  messages  Message[]
+  updatedAt DateTime  @updatedAt
+  users     User[]
 }
 
 model Message {
-  attachments Attachment[]
   body        String?
+  contentType String
   createdAt   DateTime          @default(now())
   folder      EnumMessageFolder
   id          String            @id @default(cuid())
@@ -54,25 +53,7 @@ model Message {
   updatedAt   DateTime          @updatedAt
 }
 
-model Attachment {
-  body      Json
-  createdAt DateTime             @default(now())
-  folder    EnumAttachmentFolder
-  id        String               @id @default(cuid())
-  message   Message              @relation(fields: [messageId], references: [id])
-  messageId String
-  party     String
-  route     Route                @relation(fields: [routeId], references: [id])
-  routeId   String
-  updatedAt DateTime             @updatedAt
-}
-
 enum EnumMessageFolder {
-  Inbox
-  Outbox
-}
-
-enum EnumAttachmentFolder {
   Inbox
   Outbox
 }

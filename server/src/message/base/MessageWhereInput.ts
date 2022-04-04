@@ -11,27 +11,14 @@ https://docs.amplication.com/docs/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { AttachmentListRelationFilter } from "../../attachment/base/AttachmentListRelationFilter";
-import { ValidateNested, IsOptional, IsEnum } from "class-validator";
-import { Type } from "class-transformer";
 import { StringNullableFilter } from "../../util/StringNullableFilter";
-import { EnumMessageFolder } from "./EnumMessageFolder";
+import { Type } from "class-transformer";
+import { IsOptional, IsEnum, ValidateNested } from "class-validator";
 import { StringFilter } from "../../util/StringFilter";
+import { EnumMessageFolder } from "./EnumMessageFolder";
 import { RouteWhereUniqueInput } from "../../route/base/RouteWhereUniqueInput";
 @InputType()
 class MessageWhereInput {
-  @ApiProperty({
-    required: false,
-    type: () => AttachmentListRelationFilter,
-  })
-  @ValidateNested()
-  @Type(() => AttachmentListRelationFilter)
-  @IsOptional()
-  @Field(() => AttachmentListRelationFilter, {
-    nullable: true,
-  })
-  attachments?: AttachmentListRelationFilter;
-
   @ApiProperty({
     required: false,
     type: StringNullableFilter,
@@ -42,6 +29,17 @@ class MessageWhereInput {
     nullable: true,
   })
   body?: StringNullableFilter;
+
+  @ApiProperty({
+    required: false,
+    type: StringFilter,
+  })
+  @Type(() => StringFilter)
+  @IsOptional()
+  @Field(() => StringFilter, {
+    nullable: true,
+  })
+  contentType?: StringFilter;
 
   @ApiProperty({
     required: false,

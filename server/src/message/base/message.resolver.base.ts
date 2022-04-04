@@ -25,8 +25,6 @@ import { DeleteMessageArgs } from "./DeleteMessageArgs";
 import { MessageFindManyArgs } from "./MessageFindManyArgs";
 import { MessageFindUniqueArgs } from "./MessageFindUniqueArgs";
 import { Message } from "./Message";
-import { AttachmentFindManyArgs } from "../../attachment/base/AttachmentFindManyArgs";
-import { Attachment } from "../../attachment/base/Attachment";
 import { Route } from "../../route/base/Route";
 import { MessageService } from "../message.service";
 
@@ -217,32 +215,6 @@ export class MessageResolverBase {
       }
       throw error;
     }
-  }
-
-  @graphql.ResolveField(() => [Attachment])
-  @nestAccessControl.UseRoles({
-    resource: "Message",
-    action: "read",
-    possession: "any",
-  })
-  async attachments(
-    @graphql.Parent() parent: Message,
-    @graphql.Args() args: AttachmentFindManyArgs,
-    @gqlUserRoles.UserRoles() userRoles: string[]
-  ): Promise<Attachment[]> {
-    const permission = this.rolesBuilder.permission({
-      role: userRoles,
-      action: "read",
-      possession: "any",
-      resource: "Attachment",
-    });
-    const results = await this.service.findAttachments(parent.id, args);
-
-    if (!results) {
-      return [];
-    }
-
-    return results.map((result) => permission.filter(result));
   }
 
   @graphql.ResolveField(() => Route, { nullable: true })

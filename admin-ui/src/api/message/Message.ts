@@ -1,9 +1,8 @@
-import { Attachment } from "../attachment/Attachment";
 import { Route } from "../route/Route";
 
 export type Message = {
-  attachments?: Array<Attachment>;
   body: string | null;
+  contentType: string;
   createdAt: Date;
   folder?: "Inbox" | "Outbox";
   id: string;
